@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_activity_navigation"
+    app:startDestination="@id/tickersFragment">
+
+    <fragment
+        android:id="@+id/tickersFragment"
+        android:name="com.calmmycode.testapp.ui.main_activity.tickers_list.TickerListFragment"
+        android:label="fragment_tickers"
+        tools:layout="@layout/fragment_tickers_list" >
+
+        <action
+            android:id="@+id/action_tickersFragment_to_tickerDetailsFragment"
+            app:destination="@id/tickerDetailsFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/tickerDetailsFragment"
+        android:name="com.calmmycode.testapp.ui.main_activity.ticker_details.TickerDetailsFragment"
+        android:label="fragment_ticker_details"
+        tools:layout="@layout/fragment_ticker_details" >
+
+        <argument
+            android:name="pair_name"
+            android:defaultValue="BTCUSD"
+            app:argType="string" />
+    </fragment>
+
+</navigation>
