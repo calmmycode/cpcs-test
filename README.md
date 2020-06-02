@@ -1,5 +1,7 @@
 # cpcs-test
 
+Bitfinex tickers example
+
 API 16-29
 Kotlin
 MVVM
