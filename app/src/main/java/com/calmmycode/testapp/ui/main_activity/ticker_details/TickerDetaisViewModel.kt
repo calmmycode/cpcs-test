@@ -8,6 +8,9 @@ import com.calmmycode.testapp.model.repository.LocalRepository
 import io.reactivex.Observable
 
 class TickerDetaisViewModel(repository: LocalRepository, pair_name: String) : ViewModel() {
+
+    // TODO: use assisted injection (google auto, etc.)
+
     val concertList: Observable<PagedList<TickerDetailData>> = repository.getItemHistory(pair_name)
 
 

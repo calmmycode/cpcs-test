@@ -6,9 +6,13 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.view.View
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.calmmycode.testapp.R
 import com.calmmycode.testapp.model.repository.LocalRepository
+import com.calmmycode.testapp.ui.main_activity.MainActivityViewModel
+import com.calmmycode.testapp.util.viewModelProvider
 import dagger.android.support.DaggerFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -22,10 +26,9 @@ import javax.inject.Inject
  */
 class TickerListFragment : DaggerFragment(R.layout.fragment_tickers_list) {
 
-    @Inject
-    lateinit var repository: LocalRepository
-    private val compositeDisposable = CompositeDisposable()
+    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
     private val recyclerViewAdapter = TickerListRecyclerViewAdapter(arrayListOf())
+    private lateinit var viewModel: TickerListViewModel
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -44,22 +47,19 @@ class TickerListFragment : DaggerFragment(R.layout.fragment_tickers_list) {
                 (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
             }
         }
+        viewModel = viewModelProvider(viewModelFactory)
     }
 
     override fun onStart() {
         super.onStart()
-        compositeDisposable.add(repository.getAllPairsWithTickets()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy(
-                onError = {},
-                onComplete = {},
-                onNext = { recyclerViewAdapter.updateData(it) }
-            ))
+        viewModel.newData.observe(viewLifecycleOwner, Observer {
+            recyclerViewAdapter.updateData(it)
+        })
     }
 
     override fun onStop() {
         super.onStop()
-        compositeDisposable.clear()
+        viewModel.newData.removeObservers(viewLifecycleOwner)
     }
 
     override fun onDetach() {

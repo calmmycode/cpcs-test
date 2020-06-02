@@ -18,11 +18,13 @@ import javax.inject.Singleton
 
 @Module
 class AppModule {
+    
     @Provides
     fun provideContext(application: App): Context {
         return application.applicationContext
     }
 
+    @Singleton
     @Provides
     @BaseUrlRetrofit
     fun provideBaseUrlRetrofit() : String {

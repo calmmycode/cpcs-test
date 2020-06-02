@@ -33,7 +33,6 @@ class TickerDetailsFragment : DaggerFragment(R.layout.fragment_ticker_details) {
         }
         val factory = TickerDetaisViewModel.Factory(repository, param_pair)
         viewModel = ViewModelProvider(this, factory).get(TickerDetaisViewModel::class.java)
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

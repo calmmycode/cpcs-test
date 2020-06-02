@@ -9,9 +9,12 @@ import dagger.android.ContributesAndroidInjector
 abstract class ActivityBindingModule {
 
     @ActivityScoped
-    @ContributesAndroidInjector(modules = [
-        TickersFragmentModule::class,
-        TickerDetailsFragmentModule::class
-    ])
-    internal abstract fun splashActivity(): MainActivity
+    @ContributesAndroidInjector(
+        modules = [
+            MainActivityModule::class,
+            TickersFragmentModule::class,
+            TickerDetailsFragmentModule::class
+        ]
+    )
+    internal abstract fun mainActivity(): MainActivity
 }
